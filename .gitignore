@@ -1,0 +1,6 @@
+.DS_Store
+BYRClient.xcodeproj/project.xcworkspace/
+BYRClient.xcodeproj/xcuserdata/
+Build/
+DerivedData/
+a.txt

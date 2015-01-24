@@ -1,0 +1,33 @@
+#!/bin/sh
+#$1 project name, $2 build configuration(such as 'Release','Debug')
+die()
+{
+echo build failed
+exit 0
+}
+
+projectName=$1
+config=$2
+
+echo remove old files
+rm -r build
+
+echo clean $projectName.xcodeproj
+xcodebuild -project $projectName.xcodeproj -target $projectName -configuration $config clean || die
+
+echo start build $projectName.xcodeproj
+xcodebuild -project $projectName.xcodeproj -target $projectName -configuration $config build || die
+
+echo build success
+
+echo make ipa
+
+echo dir $config-iphoneos
+cd build/$config-iphoneos
+mkdir Payload
+
+echo app name $project.app
+cp -Rpf $projectName.app Payload/
+zip -r $projectName.ipa Payload
+
+echo make ipa done!
